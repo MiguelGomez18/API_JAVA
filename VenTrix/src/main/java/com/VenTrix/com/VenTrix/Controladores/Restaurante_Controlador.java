@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/restaurante")
 public class Restaurante_Controlador {
@@ -32,19 +32,25 @@ public class Restaurante_Controlador {
     }
 
     @GetMapping("/{id}") // Obtener un restaurante por su id
-    public ResponseEntity<Restaurante> getRestauranteById(@PathVariable Integer id){
+    public ResponseEntity<Restaurante> getRestauranteById(@PathVariable String id){
         Restaurante restaurante = servicio.getRestauranteById(id);
         return new ResponseEntity<>(restaurante, HttpStatus.OK);
     }
 
+    @GetMapping("/id_usuario/{id_usuario}")
+    public ResponseEntity<String> getId_usuario(@PathVariable String id_usuario) {
+        String id = servicio.getIdByDocumentoUsuario(id_usuario);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}") // Actualizar un restaurante por su id
-    public ResponseEntity<Restaurante> updateRestaurante(@PathVariable Integer id, @RequestBody Restaurante restaurante){
+    public ResponseEntity<Restaurante> updateRestaurante(@PathVariable String id, @RequestBody Restaurante restaurante){
         Restaurante saveRestaurante = servicio.updateRestaurante(id, restaurante);
         return new ResponseEntity<>(saveRestaurante, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}") // Eliminar un restaurante por su id
-    public ResponseEntity<Void> deleteRestaurante(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteRestaurante(@PathVariable String id){
         servicio.deleteRestaurante(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

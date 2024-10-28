@@ -1,6 +1,8 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Restaurante;
 import com.VenTrix.com.VenTrix.Entidades.Sucursal;
+import com.VenTrix.com.VenTrix.Repositorios.Restaurante_Repositorio;
 import com.VenTrix.com.VenTrix.Repositorios.Sucursal_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ public class Sucursal_Servicio {
     @Autowired
     private Sucursal_Repositorio repositorio;
 
+    @Autowired
+    private Restaurante_Repositorio restaurante_repositorio;
+
     //metodos de la clase
 
     public Sucursal addSucursal(Sucursal sucursal){ //agregar sucursal
@@ -23,15 +28,24 @@ public class Sucursal_Servicio {
         return repositorio.findAll();
     }
 
-    public Sucursal getSucursalById(Integer id){ //buscar sucursal por id
+    public Sucursal getSucursalById(String id){ //buscar sucursal por id
         return repositorio.findById(id).orElse(null);
     }
 
-    public Sucursal updateSucursal(Integer id,Sucursal sucursal){ //actualizar sucursal
-        return repositorio.save(sucursal);
+    public List<Sucursal> getIdSucursalById(String restaurante) {
+        return repositorio.findByRestauranteId(restaurante);
     }
 
-    public void deleteSucursal(Integer id){ //eliminar sucursal
+    public Sucursal updateSucursal(String id_sucursal, Sucursal sucursal) { // actualizar sucursal
+        if (repositorio.existsById(id_sucursal)) {
+            sucursal.setId(id_sucursal);
+            return repositorio.save(sucursal);
+        } else {
+            return null;
+        }
+    }
+
+    public void deleteSucursal(String id){ //eliminar sucursal
         repositorio.deleteById(id);
     }
 

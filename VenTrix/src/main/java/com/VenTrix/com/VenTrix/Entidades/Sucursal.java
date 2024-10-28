@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,8 +15,8 @@ public class Sucursal {
     // Atributos de la clase Sucursal
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_sucursal;
+    @Column(unique = true, nullable = false, length = 100)
+    private String id;
 
     @Column(nullable = false, length = 100)
     private String nombre;
@@ -37,6 +38,7 @@ public class Sucursal {
 
     @ManyToOne(targetEntity = Restaurante.class)
     @JoinColumn(name = "id_restaurante")
+    @JsonBackReference
     private Restaurante restaurante;
 
 

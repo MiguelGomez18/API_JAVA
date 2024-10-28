@@ -1,6 +1,7 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
 import com.VenTrix.com.VenTrix.Entidades.Restaurante;
+import com.VenTrix.com.VenTrix.Entidades.Usuario;
 import com.VenTrix.com.VenTrix.Repositorios.Restaurante_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +20,24 @@ public class Restaurante_Servicio {
         return repositorio.save(restaurante);
     }
 
-    public Restaurante getRestauranteById(Integer id) { //obtener un restaurante por su id
+    public String getIdByDocumentoUsuario(String documentoUsuario) {
+        Restaurante restaurante = repositorio.findByUsuarioDocumento(documentoUsuario);
+        return restaurante.getId();
+    }
+
+    public Restaurante getRestauranteById(String id) { //obtener un restaurante por su id
         return repositorio.findById(id).orElse(null);
     }
 
-    public Restaurante updateRestaurante(Integer id,Restaurante restaurante){ //actualizar un restaurante
-        return repositorio.save(restaurante);
+    public Restaurante updateRestaurante(String id_restaurante,Restaurante restaurante){ //actualizar un restaurante
+        if (repositorio.existsById(id_restaurante)) {
+            return repositorio.save(restaurante);
+        } else {
+            return null;
+        }
     }
 
-    public void deleteRestaurante(Integer id){ //eliminar un restaurante
+    public void deleteRestaurante(String id){ //eliminar un restaurante
         repositorio.deleteById(id);
     }
 

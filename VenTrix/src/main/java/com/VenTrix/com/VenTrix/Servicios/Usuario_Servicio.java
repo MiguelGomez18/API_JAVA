@@ -19,7 +19,20 @@ public class Usuario_Servicio {
         return repo.save(usuario);
     }
 
-    public Usuario getUsuarioById(Integer id) { // Obtener un usuario por su ID
+    public Usuario login(String correo, String password) { // Login de un usuario
+        return repo.findByCorreoAndPassword(correo, password);
+    }
+
+    public String getUsuarioByCorreo(String correo) { // Obtener un usuario por su correo
+        Usuario usuario = repo.findByCorreo(correo);
+        if (usuario != null) {
+            return usuario.getDocumento();
+        } else {
+            return null;
+        }
+    }
+
+    public Usuario getUsuarioById(String id) { // Obtener un usuario por su ID
         return repo.findById(id).orElse(null);
     }
 
@@ -27,7 +40,7 @@ public class Usuario_Servicio {
         return repo.save(usuario);
     }
 
-    public void deleteUsuario(Integer id) { // Eliminar un usuario
+    public void deleteUsuario(String id) { // Eliminar un usuario
         repo.deleteById(id);
     }
 

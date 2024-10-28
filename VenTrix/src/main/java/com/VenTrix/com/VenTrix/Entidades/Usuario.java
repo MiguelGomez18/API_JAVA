@@ -10,14 +10,14 @@ import java.util.List;
 @Data // Incluye los getters, setters y toString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "contrasenia")
+@ToString(exclude = "password")
 public class Usuario {
 
     // Atributos de la clase Usuario
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_usuario;
+    @Column(unique = true, length = 10, nullable = false)
+    private String documento;
 
     @Column(nullable = false, length = 50)
     private String nombre;
@@ -26,7 +26,7 @@ public class Usuario {
     private String correo;
 
     @Column(nullable = false, length = 50)
-    private String contrasenia;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Rol_Usuario rol;

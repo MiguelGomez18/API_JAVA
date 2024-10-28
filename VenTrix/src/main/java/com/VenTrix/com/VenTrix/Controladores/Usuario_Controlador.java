@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/usuario")
 public class Usuario_Controlador {
 
     // Aquí se definiran las rutas para los endpoints de usuarios
@@ -25,6 +25,18 @@ public class Usuario_Controlador {
         return new ResponseEntity<>(saveUsuario, HttpStatus.CREATED);
     }
 
+    @PostMapping("/login") // Login de un usuario
+    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario){
+        Usuario saveUsuario = servicio.login(usuario.getCorreo(), usuario.getPassword());
+        return new ResponseEntity<>(saveUsuario, HttpStatus.OK);
+    }
+
+    @GetMapping("/correo/{correo}") // Obtener un usuario por su correo
+    public ResponseEntity<String> getUsuarioByCorreo(@PathVariable String correo){
+        String documento = servicio.getUsuarioByCorreo(correo);
+        return new ResponseEntity<>(documento, HttpStatus.OK);
+    }
+
     @GetMapping() // Listar todos los usuarios
     public ResponseEntity<List<Usuario>> listar(){
         List<Usuario> lista = servicio.getAllUsuarios();
@@ -32,7 +44,7 @@ public class Usuario_Controlador {
     }
 
     @GetMapping("/{id}") // Obtener un usuario por su ID
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer id){
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id){
         Usuario usuario = servicio.getUsuarioById(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
@@ -44,7 +56,7 @@ public class Usuario_Controlador {
     }
 
     @DeleteMapping("/{id}") // Eliminar un usuario
-    public ResponseEntity<Void> deleteUsuario(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteUsuario(@PathVariable String id){
         servicio.deleteUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

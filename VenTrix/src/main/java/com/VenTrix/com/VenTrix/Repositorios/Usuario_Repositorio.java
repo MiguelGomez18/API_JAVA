@@ -5,8 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Usuario_Repositorio extends JpaRepository<Usuario, Integer> {
+public interface Usuario_Repositorio extends JpaRepository<Usuario, String> {
 
+    Usuario findByCorreoAndPassword(String correo, String password);
 
+    Usuario findByCorreo(String correo);
 
 }
