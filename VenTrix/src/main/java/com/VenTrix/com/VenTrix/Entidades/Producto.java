@@ -1,4 +1,5 @@
 package com.VenTrix.com.VenTrix.Entidades;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,8 +39,16 @@ public class Producto {
     @OneToMany(targetEntity = Detalle_Pedido.class, mappedBy = "producto", cascade = CascadeType.ALL)
     private List<Detalle_Pedido> detalle_pedido;
 
+    @ManyToOne(targetEntity = Categoria.class)
+    @JoinColumn(name = "id_categoria")
+    @JsonBackReference
+    private Categoria categoria;
 
-
-
+    @ManyToMany(targetEntity = Sucursal.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "Sucursal_producto",
+            joinColumns = @JoinColumn(name = "id_sucursal"),
+            inverseJoinColumns = @JoinColumn(name = "id_producto"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id_sucursal", "id_producto"}))
+    private List<Sucursal> sucursal;
 
 }

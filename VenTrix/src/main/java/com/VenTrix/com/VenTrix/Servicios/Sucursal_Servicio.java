@@ -15,8 +15,6 @@ public class Sucursal_Servicio {
     @Autowired
     private Sucursal_Repositorio repositorio;
 
-    @Autowired
-    private Restaurante_Repositorio restaurante_repositorio;
 
     //metodos de la clase
 

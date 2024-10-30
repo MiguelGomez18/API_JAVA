@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,7 +33,10 @@ public class Pedido {
     private float total_pedido;
 
 
-
+    @ManyToOne(targetEntity = Mesa.class)
+    @JoinColumn(name = "id_mesa")
+    @JsonBackReference
+    private Mesa mesa;
 
 
 
