@@ -37,4 +37,6 @@ public class Usuario {
     @OneToMany(targetEntity = Restaurante.class, fetch = FetchType.LAZY, mappedBy = "usuario")
     private List<Restaurante> restaurantes;
 
+
+
 }

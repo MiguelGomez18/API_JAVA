@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private int id_producto;
 
 
@@ -37,6 +38,7 @@ public class Producto {
     private Disponibilidad disponibilidad;
 
     @OneToMany(targetEntity = Detalle_Pedido.class, mappedBy = "producto", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Detalle_Pedido> detalle_pedido;
 
     @ManyToOne(targetEntity = Categoria.class)
@@ -49,6 +51,8 @@ public class Producto {
             joinColumns = @JoinColumn(name = "id_sucursal"),
             inverseJoinColumns = @JoinColumn(name = "id_producto"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"id_sucursal", "id_producto"}))
+    @JsonManagedReference
     private List<Sucursal> sucursal;
+
 
 }

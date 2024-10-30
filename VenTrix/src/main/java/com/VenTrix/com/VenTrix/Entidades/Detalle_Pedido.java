@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,9 +29,11 @@ public class Detalle_Pedido {
 
      @ManyToOne
      @JoinColumn(name = "id_pedido")
+     @JsonBackReference
      private Pedido pedido;
 
      @ManyToOne
      @JoinColumn(name = "id_producto")
+     @JsonBackReference
      private Producto producto;
 }
