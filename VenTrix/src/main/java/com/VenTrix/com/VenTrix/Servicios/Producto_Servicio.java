@@ -27,15 +27,13 @@ public class Producto_Servicio {
         return repositorio.findById(id).orElse(null);
     }
 
-    public Producto actualizarProducto (int id, Producto productoDetalles) {
+    public Producto actualizarProducto(int id, Producto productoDetalles) {
         Producto producto = repositorio.findById(id).orElse(null);
-        if (producto!= null) {
+        if (producto != null) {
             producto.setNombre(productoDetalles.getNombre());
             producto.setPrecio(productoDetalles.getPrecio());
-            producto.setDescripcion(productoDetalles.getDescripcion());
             producto.setCategoria(productoDetalles.getCategoria());
-            producto.setSucursal(productoDetalles.getSucursal());
-            producto.setImagen(productoDetalles.getImagen());
+            repositorio.save(producto);
         }
         return producto;
     }

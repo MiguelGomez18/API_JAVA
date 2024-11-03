@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,8 +36,7 @@ public class Usuario {
     private LocalDate fecha_creacion;
 
     @OneToMany(targetEntity = Restaurante.class, fetch = FetchType.LAZY, mappedBy = "usuario")
+    @JsonManagedReference
     private List<Restaurante> restaurantes;
-
-
 
 }

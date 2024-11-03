@@ -20,7 +20,6 @@ public class Producto {
     @Column(nullable = false)
     private int id_producto;
 
-
     @Column(nullable = false, length = 100)
     private String nombre;
 
@@ -33,26 +32,14 @@ public class Producto {
     @Column(nullable = true, length = 1000)
     private String imagen;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Disponibilidad disponibilidad;
+    private boolean disponibilidad;
 
-    @OneToMany(targetEntity = Detalle_Pedido.class, mappedBy = "producto", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(targetEntity = Detalle_Pedido.class, fetch = FetchType.LAZY, mappedBy = "producto")
     private List<Detalle_Pedido> detalle_pedido;
 
     @ManyToOne(targetEntity = Categoria.class)
     @JoinColumn(name = "id_categoria")
     @JsonBackReference
     private Categoria categoria;
-
-    @ManyToMany(targetEntity = Sucursal.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "Sucursal_producto",
-            joinColumns = @JoinColumn(name = "id_sucursal"),
-            inverseJoinColumns = @JoinColumn(name = "id_producto"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"id_sucursal", "id_producto"}))
-    @JsonManagedReference
-    private List<Sucursal> sucursal;
-
-
 }

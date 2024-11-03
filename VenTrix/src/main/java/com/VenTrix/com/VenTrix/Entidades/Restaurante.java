@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -48,6 +49,7 @@ public class Restaurante {
 
     @ManyToOne(targetEntity = Usuario.class)
     @JoinColumn(name = "id_usuario")
+    @JsonBackReference
     private Usuario usuario;
 
     @OneToMany(targetEntity = Sucursal.class, fetch = FetchType.LAZY, mappedBy = "restaurante")

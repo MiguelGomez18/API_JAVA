@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data // Incluye los getters, setters y toString
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Detalle_Pedido {
 
      // Atributos de la clase Detalle_Pedido
@@ -29,11 +28,9 @@ public class Detalle_Pedido {
 
      @ManyToOne
      @JoinColumn(name = "id_pedido")
-     @JsonBackReference
      private Pedido pedido;
 
      @ManyToOne
      @JoinColumn(name = "id_producto")
-     @JsonBackReference
      private Producto producto;
 }

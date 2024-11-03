@@ -32,10 +32,8 @@ public class Pedido {
     @Column(nullable = false)
     private float total_pedido;
 
-
     @ManyToOne(targetEntity = Mesa.class)
     @JoinColumn(name = "id_mesa")
-    @JsonBackReference
     private Mesa mesa;
 
 

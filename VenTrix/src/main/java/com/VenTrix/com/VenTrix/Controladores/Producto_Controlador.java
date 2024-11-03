@@ -25,7 +25,7 @@ public class Producto_Controlador {
     }
 
     // Obtener todos los productos
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<Producto>> obtenerTodosLosProductos() {
         List<Producto> productos = servicio.listarProductos();
         return new ResponseEntity<>(productos, HttpStatus.OK);
@@ -41,8 +41,8 @@ public class Producto_Controlador {
 
     // Actualizar un producto existente
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> actualizarProducto(@PathVariable int id, @RequestBody Producto productoDetalles) {
-        Producto productoActualizado = servicio.actualizarProducto(id, productoDetalles);
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable int id, @RequestBody Producto producto) {
+        Producto productoActualizado = servicio.actualizarProducto(id, producto);
         return productoActualizado != null ? new ResponseEntity<>(productoActualizado, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
