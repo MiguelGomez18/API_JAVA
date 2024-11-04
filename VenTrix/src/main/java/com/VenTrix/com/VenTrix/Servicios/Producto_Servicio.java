@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Categoria;
 import com.VenTrix.com.VenTrix.Entidades.Producto;
 import com.VenTrix.com.VenTrix.Repositorios.Producto_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class Producto_Servicio {
             producto.setNombre(productoDetalles.getNombre());
             producto.setPrecio(productoDetalles.getPrecio());
             producto.setCategoria(productoDetalles.getCategoria());
+            producto.setDescripcion(productoDetalles.getDescripcion());
+            producto.setImagen(productoDetalles.getImagen());
+            producto.setDisponibilidad(productoDetalles.isDisponibilidad());
             repositorio.save(producto);
         }
         return producto;
@@ -42,4 +46,5 @@ public class Producto_Servicio {
         repositorio.deleteById(id);
         return true;
     }
+
 }
