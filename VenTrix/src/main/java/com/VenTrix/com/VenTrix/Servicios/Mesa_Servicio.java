@@ -1,8 +1,8 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
 import com.VenTrix.com.VenTrix.Entidades.Mesa;
-import com.VenTrix.com.VenTrix.Entidades.Sucursal;
 import com.VenTrix.com.VenTrix.Repositorios.Mesa_Repositorio;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,9 @@ public class Mesa_Servicio {
 
     public List<Mesa> listarPorSucursal() { // Listar mesas
         return repositorio.findAll();
+    }
+    public List<Mesa> getIdSucursalById(String sucursal) {
+        return repositorio.findBySucursalId(sucursal);
     }
 
     public Mesa getMesaById(String id) { // Obtener una mesa por su ID

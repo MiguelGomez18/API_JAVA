@@ -1,7 +1,6 @@
 package com.VenTrix.com.VenTrix.Controladores;
 
 import com.VenTrix.com.VenTrix.Entidades.Mesa;
-import com.VenTrix.com.VenTrix.Entidades.Sucursal;
 import com.VenTrix.com.VenTrix.Servicios.Mesa_Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +31,12 @@ public class Mesa_Controlador {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
+    @GetMapping("/id_sucursal/{id_sucursal}")
+    public ResponseEntity<List<Mesa>> getIdSucursal(@PathVariable("id_sucursal") String sucursal) {
+        List<Mesa> mesas = servicio.getIdSucursalById(sucursal);
+        return new ResponseEntity<>(mesas, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}") // Obtener una mesa por su ID
     public ResponseEntity<Mesa> getMesaById(@PathVariable String id) {
         Mesa mesa = servicio.getMesaById(id);
@@ -49,13 +54,6 @@ public class Mesa_Controlador {
         servicio.deleteMesa(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
-
-
-
-
 
 
 }
