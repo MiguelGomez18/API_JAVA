@@ -2,7 +2,9 @@ package com.VenTrix.com.VenTrix.Controladores;
 
 import com.VenTrix.com.VenTrix.Entidades.Categoria;
 import com.VenTrix.com.VenTrix.Entidades.Producto;
+import com.VenTrix.com.VenTrix.Entidades.Sucursal;
 import com.VenTrix.com.VenTrix.Repositorios.Categoria_Repositorio;
+import com.VenTrix.com.VenTrix.Repositorios.Sucursal_Repositorio;
 import com.VenTrix.com.VenTrix.Servicios.Producto_Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,6 +32,9 @@ public class Producto_Controlador {
     @Autowired
     private Categoria_Repositorio repositorio;
 
+    @Autowired
+    private Sucursal_Repositorio sucursalRepositorio;
+
     // Crear un nuevo producto
     @PostMapping("/registrar_producto")
     public ResponseEntity<Producto> crearProducto(
@@ -38,15 +44,17 @@ public class Producto_Controlador {
             @RequestParam("descripcion") String descripcion,
             @RequestParam("disponibilidad") boolean disponibilidad,
             @RequestParam("id_categoria") String categoriaId,
+            @RequestParam("id_sucursal") String id_sucursal,
             @RequestParam("imagen") MultipartFile imagen) {
 
         try {
             String nombreArchivo = null;
             if (!imagen.isEmpty()) {
-                nombreArchivo = guardarImagenEnDirectorio(imagen);
+                nombreArchivo = guardarImagenEnDirectorio(idProducto,imagen);
             }
 
             Categoria categoria = repositorio.getReferenceById(categoriaId);
+            Sucursal sucursal = sucursalRepositorio.getReferenceById(id_sucursal);
 
             Producto producto = new Producto();
             producto.setId_producto(idProducto);
@@ -54,7 +62,8 @@ public class Producto_Controlador {
             producto.setPrecio(precio);
             producto.setDescripcion(descripcion);
             producto.setDisponibilidad(disponibilidad);
-            producto.setImagen(nombreArchivo != null ? "/imagenes/" + nombreArchivo : null);  // Ruta pública
+            producto.setSucursal(sucursal);
+            producto.setImagen(nombreArchivo != null ? "/imagenes/" + idProducto + "-" + nombreArchivo : null);  // Ruta pública
             producto.setCategoria(categoria);
 
             Producto nuevoProducto = servicio.guardarProducto(producto);
@@ -65,9 +74,17 @@ public class Producto_Controlador {
         }
     }
 
-    private String guardarImagenEnDirectorio(MultipartFile imagen) throws IOException {
+
+    private String guardarImagenEnDirectorio(int id,MultipartFile imagen) throws IOException {
         String nombreArchivo = System.currentTimeMillis() + "_" + imagen.getOriginalFilename();
-        Files.copy(imagen.getInputStream(), Paths.get(DIRECTORIO_IMAGENES + nombreArchivo), StandardCopyOption.REPLACE_EXISTING);
+        File archivoDestino = new File(DIRECTORIO_IMAGENES + id + "-" + nombreArchivo);
+
+        // Verifica si ya existe un archivo con el mismo nombre
+        if (archivoDestino.exists()) {
+            return nombreArchivo;
+        }
+
+        Files.copy(imagen.getInputStream(), archivoDestino.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return nombreArchivo;
     }
 
@@ -98,23 +115,36 @@ public class Producto_Controlador {
                                                        @RequestParam("disponibilidad") boolean disponibilidad) {
 
         try {
-            String nombreArchivo = null;
+            Producto productoExistente = servicio.obtenerProductoPorId(id);
+            if (productoExistente == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            String nombreArchivo = productoExistente.getImagen();
             if (!imagen.isEmpty()) {
-                nombreArchivo = guardarImagenEnDirectorio(imagen);
+                // Borra la imagen anterior si existe
+                if (nombreArchivo != null && !nombreArchivo.isEmpty()) {
+                    File archivoAnterior = new File(DIRECTORIO_IMAGENES + nombreArchivo.substring(nombreArchivo.lastIndexOf("/") + 1));
+                    if (archivoAnterior.exists()) {
+                        archivoAnterior.delete();
+                    }
+                }
+
+                // Guarda la nueva imagen y actualiza la variable 'nombreArchivo' con el nombre del nuevo archivo
+                nombreArchivo = guardarImagenEnDirectorio(id,imagen);
             }
 
             Categoria categoria = repositorio.getReferenceById(categoriaId);
 
-            Producto producto = new Producto();
-            producto.setNombre(nombre);
-            producto.setPrecio(precio);
-            producto.setCategoria(categoria);
-            producto.setDescripcion(descripcion);
-            producto.setDisponibilidad(disponibilidad);
-            producto.setImagen(nombreArchivo != null ? "/imagenes/" + nombreArchivo : null);  // Ruta pública
-            Producto productoActualizado = servicio.actualizarProducto(id, producto);
-            return productoActualizado != null ? new ResponseEntity<>(productoActualizado, HttpStatus.OK) :
-                    new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            productoExistente.setNombre(nombre);
+            productoExistente.setPrecio(precio);
+            productoExistente.setCategoria(categoria);
+            productoExistente.setDescripcion(descripcion);
+            productoExistente.setDisponibilidad(disponibilidad);
+            productoExistente.setImagen(nombreArchivo != null ? "/imagenes/" + nombreArchivo : null);  // Ruta pública
+
+            Producto productoActualizado = servicio.actualizarProducto(id, productoExistente);
+            return new ResponseEntity<>(productoActualizado, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -38,6 +38,11 @@ public class Producto {
     @OneToMany(targetEntity = Detalle_Pedido.class, fetch = FetchType.LAZY, mappedBy = "producto")
     private List<Detalle_Pedido> detalle_pedido;
 
+    @ManyToOne(targetEntity = Sucursal.class)
+    @JoinColumn(name = "id_sucursal")
+    @JsonBackReference
+    private Sucursal sucursal;
+
     @ManyToOne(targetEntity = Categoria.class)
     @JoinColumn(name = "id_categoria")
     @JsonBackReference
