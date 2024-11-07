@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,5 @@ public class Producto {
 
     @ManyToOne(targetEntity = Categoria.class)
     @JoinColumn(name = "id_categoria")
-    @JsonBackReference
     private Categoria categoria;
 }

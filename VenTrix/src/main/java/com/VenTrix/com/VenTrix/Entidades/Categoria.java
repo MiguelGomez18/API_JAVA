@@ -1,4 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +24,7 @@ public class Categoria {
     private String descripcion;
 
     @OneToMany(targetEntity = Producto.class, fetch = FetchType.LAZY, mappedBy = "categoria")
-    @JsonManagedReference
+    @JsonIncludeProperties("id_producto")
     private List<Producto> producto;
 
 }

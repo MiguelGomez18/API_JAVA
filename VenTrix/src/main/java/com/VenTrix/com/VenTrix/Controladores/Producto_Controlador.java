@@ -141,7 +141,7 @@ public class Producto_Controlador {
             productoExistente.setCategoria(categoria);
             productoExistente.setDescripcion(descripcion);
             productoExistente.setDisponibilidad(disponibilidad);
-            productoExistente.setImagen(nombreArchivo != null ? "/imagenes/" + nombreArchivo : null);  // Ruta pública
+            productoExistente.setImagen(nombreArchivo != null ? "/imagenes/"+ id + "-" + nombreArchivo : null);  // Ruta pública
 
             Producto productoActualizado = servicio.actualizarProducto(id, productoExistente);
             return new ResponseEntity<>(productoActualizado, HttpStatus.OK);
