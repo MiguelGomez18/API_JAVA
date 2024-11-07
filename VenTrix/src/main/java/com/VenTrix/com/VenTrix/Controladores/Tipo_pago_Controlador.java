@@ -18,8 +18,6 @@ public class Tipo_pago_Controlador {
     @Autowired
     private Tipo_pago_Servicio tipoPagoServicio;
 
-
-
     // Registrar un nuevo tipo de pago
     @PostMapping("/registrar")
     public ResponseEntity<Tipo_pago> registrarTipoPago(@RequestBody Tipo_pago tipoPago) {

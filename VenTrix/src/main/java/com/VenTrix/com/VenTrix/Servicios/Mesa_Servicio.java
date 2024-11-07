@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Estado_Mesa;
 import com.VenTrix.com.VenTrix.Entidades.Mesa;
 import com.VenTrix.com.VenTrix.Repositorios.Mesa_Repositorio;
 
@@ -25,6 +26,10 @@ public class Mesa_Servicio {
     }
     public List<Mesa> getIdSucursalById(String sucursal) {
         return repositorio.findBySucursalId(sucursal);
+    }
+
+    public List<Mesa> getMesaRapidaBySucursal(String id_sucursal, Estado_Mesa estado) {
+        return repositorio.findBySucursalIdAndEstado(id_sucursal, estado);
     }
 
     public Mesa getMesaById(String id) { // Obtener una mesa por su ID
