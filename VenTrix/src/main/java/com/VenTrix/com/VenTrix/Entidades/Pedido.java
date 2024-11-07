@@ -38,7 +38,6 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_pago")
-    @JsonBackReference// Ajusta el nombre de columna si es necesario
     private Tipo_pago tipo_pago;
 
 

@@ -1,6 +1,7 @@
 
 package com.VenTrix.com.VenTrix.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,6 @@ public class Tipo_pago {
     private String descripcion;
 
     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "tipo_pago")
-    @JsonManagedReference
+    @JsonIncludeProperties("id_pedidos")
     private List<Pedido> pedidos;
 }

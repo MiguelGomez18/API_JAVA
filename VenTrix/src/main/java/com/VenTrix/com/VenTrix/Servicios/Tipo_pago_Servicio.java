@@ -11,9 +11,11 @@ import java.util.List;
 @Service
 public class Tipo_pago_Servicio {
 
+    @Autowired
     private final Tipo_pago_Repositorio repositorio;
 
-    @Autowired
+    // metodos de la clase
+
     public Tipo_pago_Servicio(Tipo_pago_Repositorio repositorio) {this.repositorio = repositorio;}
 
     // Método para agregar un nuevo tipo de pago
@@ -22,23 +24,13 @@ public class Tipo_pago_Servicio {
     // Método para obtener un tipo de pago por su ID
     public Tipo_pago getTipoPagoById(int id) { return repositorio.findById(id).orElse(null);}
 
+    // Método para obtener todos los tipos de pago
+    public List<Tipo_pago> getAllTipoPagos() { return repositorio.findAll();}
+
     // Método para actualizar un tipo de pago
-    public Tipo_pago updateTipoPago(int id, Tipo_pago tipoPago) {
-        if (repositorio.existsById(id)) {
-            tipoPago.setId(id); // Asegurarse de establecer el ID correcto
-            return repositorio.save(tipoPago);
-        } else {
-            return null;
-        }
-    }
+    public Tipo_pago updateTipoPago(int id, Tipo_pago tipo_pago) { return repositorio.save(tipo_pago);}
 
-    // Método para eliminar un tipo de pago por su ID
-    public void deleteTipoPago(int id) {
-        repositorio.deleteById(id);
-    }
+    // Método para eliminar un tipo de pago
+    public void deleteTipoPago(int id) { repositorio.deleteById(id);}
 
-    // Método para listar todos los tipos de pago
-    public List<Tipo_pago> listarTiposPago() {
-        return repositorio.findAll();
-    }
 }
