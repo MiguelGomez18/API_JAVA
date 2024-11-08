@@ -76,7 +76,7 @@ public class Producto_Controlador {
 
 
     private String guardarImagenEnDirectorio(int id,MultipartFile imagen) throws IOException {
-        String nombreArchivo = System.currentTimeMillis() + "_" + imagen.getOriginalFilename();
+        String nombreArchivo = imagen.getOriginalFilename();
         File archivoDestino = new File(DIRECTORIO_IMAGENES + id + "-" + nombreArchivo);
 
         // Verifica si ya existe un archivo con el mismo nombre
@@ -122,7 +122,7 @@ public class Producto_Controlador {
 
             String nombreArchivo = productoExistente.getImagen();
             if (!imagen.isEmpty()) {
-                // Borra la imagen anterior si existe
+
                 if (nombreArchivo != null && !nombreArchivo.isEmpty()) {
                     File archivoAnterior = new File(DIRECTORIO_IMAGENES + nombreArchivo.substring(nombreArchivo.lastIndexOf("/") + 1));
                     if (archivoAnterior.exists()) {
@@ -130,7 +130,6 @@ public class Producto_Controlador {
                     }
                 }
 
-                // Guarda la nueva imagen y actualiza la variable 'nombreArchivo' con el nombre del nuevo archivo
                 nombreArchivo = guardarImagenEnDirectorio(id,imagen);
             }
 
@@ -146,6 +145,7 @@ public class Producto_Controlador {
             Producto productoActualizado = servicio.actualizarProducto(id, productoExistente);
             return new ResponseEntity<>(productoActualizado, HttpStatus.OK);
         } catch (IOException e) {
+            System.out.println("entra");
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -154,6 +154,14 @@ public class Producto_Controlador {
     // Eliminar un producto
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable int id) {
+        Producto producto = servicio.obtenerProductoPorId(id);
+        String nombreArchivo = producto.getImagen();
+
+        File archivoAnterior = new File(DIRECTORIO_IMAGENES + nombreArchivo.substring(nombreArchivo.lastIndexOf("/") + 1));
+        if (archivoAnterior.exists()) {
+            archivoAnterior.delete();
+        }
+
         boolean eliminado = servicio.eliminarProducto(id);
         return eliminado ? new ResponseEntity<>(HttpStatus.NO_CONTENT) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);

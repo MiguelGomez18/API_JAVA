@@ -1,10 +1,13 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data // Incluye los getters, setters y toString
@@ -40,6 +43,4 @@ public class Sucursal {
     @JoinColumn(name = "id_restaurante")
     @JsonBackReference
     private Restaurante restaurante;
-
-
 }
