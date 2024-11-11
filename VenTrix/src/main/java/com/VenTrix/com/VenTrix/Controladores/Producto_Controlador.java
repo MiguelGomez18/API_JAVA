@@ -38,42 +38,42 @@ public class Producto_Controlador {
     // Crear un nuevo producto
     @PostMapping("/registrar_producto")
     public ResponseEntity<Producto> crearProducto(
-            @RequestParam("id_producto") int idProducto,
             @RequestParam("nombre") String nombre,
             @RequestParam("precio") float precio,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("disponibilidad") boolean disponibilidad,
-            @RequestParam("id_categoria") String categoriaId,
+            @RequestParam("id_categoria") int categoriaId,
             @RequestParam("id_sucursal") String id_sucursal,
             @RequestParam("imagen") MultipartFile imagen) {
 
         try {
-            String nombreArchivo = null;
-            if (!imagen.isEmpty()) {
-                nombreArchivo = guardarImagenEnDirectorio(idProducto,imagen);
-            }
+            String nombreArchivo = "h";
 
             Categoria categoria = repositorio.getReferenceById(categoriaId);
             Sucursal sucursal = sucursalRepositorio.getReferenceById(id_sucursal);
 
             Producto producto = new Producto();
-            producto.setId_producto(idProducto);
             producto.setNombre(nombre);
             producto.setPrecio(precio);
             producto.setDescripcion(descripcion);
             producto.setDisponibilidad(disponibilidad);
             producto.setSucursal(sucursal);
-            producto.setImagen(nombreArchivo != null ? "/imagenes/" + idProducto + "-" + nombreArchivo : null);  // Ruta pública
+            producto.setImagen(nombreArchivo);
             producto.setCategoria(categoria);
 
             Producto nuevoProducto = servicio.guardarProducto(producto);
+            if (!imagen.isEmpty()) {
+                nombreArchivo = guardarImagenEnDirectorio(nuevoProducto.getId_producto(), imagen);
+            }
+            nuevoProducto.setImagen("/imagenes/" + nuevoProducto.getId_producto() + "-" + nombreArchivo);
+            nuevoProducto = servicio.actualizarProducto(nuevoProducto.getId_producto(), nuevoProducto);
+
             return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     private String guardarImagenEnDirectorio(int id,MultipartFile imagen) throws IOException {
         String nombreArchivo = imagen.getOriginalFilename();
@@ -96,6 +96,26 @@ public class Producto_Controlador {
         return new ResponseEntity<>(productos, HttpStatus.OK);
     }
 
+    @GetMapping("/id_sucursal/{id_sucursal}")
+    public ResponseEntity<List<Producto>> getIdproducto(@PathVariable("id_sucursal") String sucursal) {
+        List<Producto> productos = servicio.getIdProductoById(sucursal);
+        return ResponseEntity.ok(productos);
+    }
+
+    @GetMapping("/disponibilidad/{id_sucursal}")
+    public ResponseEntity<List<Producto>> getIdproductodisponible(@PathVariable("id_sucursal") String sucursal) {
+        boolean disponibilidad = true;
+        List<Producto> productos = servicio.getIdProductoDisponibilidadById(sucursal, disponibilidad);
+        return ResponseEntity.ok(productos);
+    }
+
+    @GetMapping("/categoria/{id_sucursal}/{categoria}")
+    public ResponseEntity<List<Producto>> getIdproductodisponible(@PathVariable("id_sucursal") String sucursal, @PathVariable("categoria") Integer categoria) {
+        boolean disponibilidad = true;
+        List<Producto> productos = servicio.getIdProductoCategoriaById(sucursal, disponibilidad, categoria);
+        return ResponseEntity.ok(productos);
+    }
+
     // Obtener los producto por ID
     @GetMapping("/{id}")
     public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable int id) {
@@ -109,7 +129,7 @@ public class Producto_Controlador {
     public ResponseEntity<Producto> actualizarProducto(@PathVariable int id,
                                                        @RequestParam("nombre") String nombre,
                                                        @RequestParam("precio") Integer precio,
-                                                       @RequestParam("id_categoria") String categoriaId,
+                                                       @RequestParam("id_categoria") int categoriaId,
                                                        @RequestParam("descripcion") String descripcion,
                                                        @RequestParam("imagen") MultipartFile imagen,
                                                        @RequestParam("disponibilidad") boolean disponibilidad) {

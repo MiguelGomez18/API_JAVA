@@ -19,6 +19,7 @@ import java.util.List;
 public class Producto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int id_producto;
 

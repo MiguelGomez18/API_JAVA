@@ -14,14 +14,18 @@ import java.util.List;
 public class Categoria {
 
     @Id
-    @Column(unique = true, nullable = false)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private int id;
 
     @Column(nullable = false, length = 100)
     private String nombre;
 
     @Column(nullable = true, length = 100)
     private String descripcion;
+
+    @Column(nullable = false)
+    private String sucursal;
 
     @OneToMany(targetEntity = Producto.class, fetch = FetchType.LAZY, mappedBy = "categoria")
     @JsonIncludeProperties("id_producto")

@@ -1,6 +1,5 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
-import com.VenTrix.com.VenTrix.Entidades.Categoria;
 import com.VenTrix.com.VenTrix.Entidades.Producto;
 import com.VenTrix.com.VenTrix.Repositorios.Producto_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,18 @@ public class Producto_Servicio {
 
     public List<Producto> listarProductos() {
         return repositorio.findAll();
+    }
+
+    public List<Producto> getIdProductoById(String sucursal) {
+        return repositorio.findBySucursalId(sucursal);
+    }
+
+    public List<Producto> getIdProductoDisponibilidadById(String sucursal, boolean disponibilidad) {
+        return repositorio.findBySucursalIdAndDisponibilidad(sucursal, disponibilidad);
+    }
+
+    public List<Producto> getIdProductoCategoriaById(String sucursal, boolean disponibilidad, Integer categoria) {
+        return repositorio.findBySucursalIdAndDisponibilidadAndCategoriaId(sucursal, disponibilidad, categoria);
     }
 
     public Producto obtenerProductoPorId(int id) {

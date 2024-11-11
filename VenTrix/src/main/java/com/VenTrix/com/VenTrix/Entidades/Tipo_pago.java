@@ -24,6 +24,9 @@ public class Tipo_pago {
     @Column(nullable = false)
     private String descripcion;
 
+    @Column(nullable = false)
+    private String sucursal;
+
     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "tipo_pago")
     @JsonIncludeProperties("id_pedidos")
     private List<Pedido> pedidos;

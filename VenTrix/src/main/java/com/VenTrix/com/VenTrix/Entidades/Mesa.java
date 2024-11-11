@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class Mesa {
 
     @ManyToOne(targetEntity = Sucursal.class)
     @JoinColumn(name = "id_sucursal")
+    @JsonBackReference
     private Sucursal sucursal;
 
     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "mesa")

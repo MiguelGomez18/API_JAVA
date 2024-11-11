@@ -37,21 +37,27 @@ public class Categoria_Controlador {
 
     // Aquí se crea el endpoint para obtener una categoria por su ID
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getCategoriaById(@PathVariable String id) {
+    public ResponseEntity<Categoria> getCategoriaById(@PathVariable Integer id) {
         Categoria categoria = servicio.getCategoriaById(id);
         return new ResponseEntity<>(categoria, HttpStatus.OK);
     }
 
+    @GetMapping("/id_sucursal/{id_sucursal}")
+    public ResponseEntity<List<Categoria>> listarCategoriassucursales(@PathVariable("id_sucursal") String id_sucursal) {
+        List<Categoria> lista = servicio.getSucursalById(id_sucursal);
+        return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
+
     // Aquí se crea el endpoint para actualizar una categoria
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> updateCategoria(@PathVariable String id, @RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> updateCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
         Categoria updateCategoria = servicio.updateCategoria(id, categoria);
         return new ResponseEntity<>(updateCategoria, HttpStatus.OK);
     }
 
     // Aquí se crea el endpoint para eliminar una categoria
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategoria(@PathVariable String id) {
+    public ResponseEntity<Void> deleteCategoria(@PathVariable Integer id) {
         servicio.deleteCategoria(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

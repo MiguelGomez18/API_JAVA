@@ -1,6 +1,7 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
 import com.VenTrix.com.VenTrix.Entidades.Categoria;
+import com.VenTrix.com.VenTrix.Entidades.Producto;
 import com.VenTrix.com.VenTrix.Repositorios.Categoria_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,19 +25,23 @@ public class Categoria_Servicio {
         return repositorio.save(categoria);
     }
 
-    public Categoria getCategoriaById(String id) { // Obtener una categoría por su ID
+    public Categoria getCategoriaById(Integer id) { // Obtener una categoría por su ID
         return repositorio.findById(id).orElse(null);
     }
 
-    public Categoria updateCategoria(String id, Categoria categoria) { // Actualizar una categoría
+    public Categoria updateCategoria(Integer id, Categoria categoria) { // Actualizar una categoría
         return repositorio.save(categoria);
     }
 
-    public void deleteCategoria(String id) { // Eliminar una categoría
+    public void deleteCategoria(Integer id) { // Eliminar una categoría
         repositorio.deleteById(id);
     }
 
     public List<Categoria> listarCategorias() {
         return repositorio.findAll();
+    }
+
+    public List<Categoria> getSucursalById(String id_sucursal) {
+        return repositorio.findBySucursal(id_sucursal);
     }
 }

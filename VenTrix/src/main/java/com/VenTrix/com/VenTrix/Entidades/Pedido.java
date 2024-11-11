@@ -40,14 +40,4 @@ public class Pedido {
     @JoinColumn(name = "id_tipo_pago")
     private Tipo_pago tipo_pago;
 
-
-
-
-
-
-
-
-
-
-
 }

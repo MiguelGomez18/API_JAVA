@@ -40,6 +40,12 @@ public class Tipo_pago_Controlador {
         return new ResponseEntity<>(tiposPago, HttpStatus.OK);
     }
 
+    @GetMapping("/id_sucursal/{id_sucursal}")
+    public ResponseEntity<List<Tipo_pago>> obtenerTiposPagoSucursal(@PathVariable("id_sucursal") String id_sucursal) {
+        List<Tipo_pago> tiposPago = tipoPagoServicio.getAllTipoPagosSucursal(id_sucursal);
+        return new ResponseEntity<>(tiposPago, HttpStatus.OK);
+    }
+
     // Obtener un tipo de pago por su ID
     @GetMapping("/{id}")
     public ResponseEntity<Tipo_pago> obtenerTipoPago(@PathVariable int id) {

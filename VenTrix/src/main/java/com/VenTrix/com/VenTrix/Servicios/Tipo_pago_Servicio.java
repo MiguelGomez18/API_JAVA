@@ -24,6 +24,10 @@ public class Tipo_pago_Servicio {
 
     public List<Tipo_pago> getAllTipoPagos() { return repositorio.findAll();}
 
+    public List<Tipo_pago> getAllTipoPagosSucursal(String id_sucursal) {
+        return repositorio.findBySucursal(id_sucursal);
+    }
+
     public Tipo_pago updateTipoPago(int id, Tipo_pago tipo_pago) { return repositorio.save(tipo_pago);}
 
     public void deleteTipoPago(int id) { repositorio.deleteById(id);}

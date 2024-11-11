@@ -27,10 +27,6 @@ public class Detalle_Pedido {
      private float precio_total;
 
      @ManyToOne
-     @JoinColumn(name = "id_pedido")
-     private Pedido pedido;
-
-     @ManyToOne
      @JoinColumn(name = "id_producto")
      private Producto producto;
 }
