@@ -1,8 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,6 +36,9 @@ public class Sucursal {
 
     @Enumerated(EnumType.STRING)
     private Estado_Sucursal estado;
+
+    @Column(nullable = true, length = 10)
+    private String administrador;
 
     @ManyToOne(targetEntity = Restaurante.class)
     @JoinColumn(name = "id_restaurante")

@@ -1,7 +1,9 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
 import com.VenTrix.com.VenTrix.Entidades.Restaurante;
+import com.VenTrix.com.VenTrix.Entidades.Rol_Usuario;
 import com.VenTrix.com.VenTrix.Entidades.Sucursal;
+import com.VenTrix.com.VenTrix.Entidades.Usuario;
 import com.VenTrix.com.VenTrix.Repositorios.Restaurante_Repositorio;
 import com.VenTrix.com.VenTrix.Repositorios.Sucursal_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +32,13 @@ public class Sucursal_Servicio {
         return repositorio.findById(id).orElse(null);
     }
 
-    public List<Sucursal> getIdSucursalById(String restaurante) {
-        return repositorio.findByRestauranteId(restaurante);
+    public String getByAdministrador(String administrador) { // Obtener un usuario por su correo
+        Sucursal sucursal = repositorio.findByAdministrador(administrador);
+        if (sucursal != null) {
+            return sucursal.getId();
+        } else {
+            return null;
+        }
     }
 
     public Sucursal updateSucursal(String id_sucursal, Sucursal sucursal) { // actualizar sucursal

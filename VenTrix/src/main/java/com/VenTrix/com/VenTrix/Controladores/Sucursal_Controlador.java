@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/sucursal")
@@ -26,10 +25,11 @@ public class Sucursal_Controlador {
         return new ResponseEntity<>(saveSucursal, HttpStatus.CREATED);
     }
 
-    @GetMapping("/id_sucursal/{id_restaurante}")
-    public ResponseEntity<List<Sucursal>> getIdSucursal(@PathVariable("id_restaurante") String restaurante) {
-        List<Sucursal> sucursales = servicio.getIdSucursalById(restaurante);
-        return ResponseEntity.ok(sucursales);
+
+    @GetMapping("/id_usuario/{administrador}") // Obtener un usuario por su correo
+    public ResponseEntity<String> getUsuarioByDocumento(@PathVariable("administrador") String administrador){
+        String sucursal = servicio.getByAdministrador(administrador);
+        return new ResponseEntity<>(sucursal, HttpStatus.OK);
     }
 
     @GetMapping("/{id}") // Obtener una sucursal por su ID

@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Controladores;
 
+import com.VenTrix.com.VenTrix.Entidades.Rol_Usuario;
 import com.VenTrix.com.VenTrix.Entidades.Usuario;
 import com.VenTrix.com.VenTrix.Servicios.Usuario_Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class Usuario_Controlador {
     public ResponseEntity<String> getUsuarioByCorreo(@PathVariable String correo){
         String documento = servicio.getUsuarioByCorreo(correo);
         return new ResponseEntity<>(documento, HttpStatus.OK);
+    }
+
+    @GetMapping("/documento/{correo}") // Obtener un usuario por su correo
+    public ResponseEntity<Rol_Usuario> getUsuarioByDocumento(@PathVariable String correo){
+        Rol_Usuario rol = servicio.getUsuarioByDocumento(correo);
+        return new ResponseEntity<>(rol, HttpStatus.OK);
     }
 
     @GetMapping() // Listar todos los usuarios

@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Rol_Usuario;
 import com.VenTrix.com.VenTrix.Entidades.Usuario;
 import com.VenTrix.com.VenTrix.Repositorios.Usuario_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,15 @@ public class Usuario_Servicio {
         Usuario usuario = repo.findByCorreo(correo);
         if (usuario != null) {
             return usuario.getDocumento();
+        } else {
+            return null;
+        }
+    }
+
+    public Rol_Usuario getUsuarioByDocumento(String coreo) { // Obtener un usuario por su correo
+        Usuario usuario = repo.findByCorreo(coreo);
+        if (usuario != null) {
+            return usuario.getRol();
         } else {
             return null;
         }
