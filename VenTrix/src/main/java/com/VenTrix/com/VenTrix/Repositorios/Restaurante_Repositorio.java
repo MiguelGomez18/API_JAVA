@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface Restaurante_Repositorio extends JpaRepository<Restaurante, String> {
 
     Restaurante findByUsuarioDocumento(String documento);
-
 }

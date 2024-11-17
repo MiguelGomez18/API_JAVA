@@ -25,8 +25,13 @@ public class Restaurante_Servicio {
         return restaurante.getId();
     }
 
-    public Restaurante getRestauranteById(String id) { //obtener un restaurante por su id
-        return repositorio.findById(id).orElse(null);
+    public String getRestauranteById(String id) { //obtener un restaurante por su id
+       Restaurante restaurante = repositorio.findById(id).orElse(null);
+        if (restaurante != null) {
+            return restaurante.getNombre();
+        } else {
+            return null;
+        }
     }
 
     public Restaurante updateRestaurante(String id_restaurante,Restaurante restaurante){ //actualizar un restaurante

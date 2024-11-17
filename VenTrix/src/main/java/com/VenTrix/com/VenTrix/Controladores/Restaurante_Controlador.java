@@ -32,8 +32,8 @@ public class Restaurante_Controlador {
     }
 
     @GetMapping("/{id}") // Obtener un restaurante por su id
-    public ResponseEntity<Restaurante> getRestauranteById(@PathVariable String id){
-        Restaurante restaurante = servicio.getRestauranteById(id);
+    public ResponseEntity<String> getRestauranteById(@PathVariable String id){
+        String restaurante = servicio.getRestauranteById(id);
         return new ResponseEntity<>(restaurante, HttpStatus.OK);
     }
 
