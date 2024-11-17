@@ -42,8 +42,26 @@ public class Usuario_Servicio {
         }
     }
 
+    public String getUsuarioBySucursal(String documento) { // Obtener un usuario por su correo
+        Usuario usuario = repo.findById(documento).orElse(null);
+        if (usuario != null) {
+            return usuario.getSucursal();
+        } else {
+            return null;
+        }
+    }
+
     public Usuario getUsuarioById(String id) { // Obtener un usuario por su ID
         return repo.findById(id).orElse(null);
+    }
+
+    public String getUsuarioByNombre(String id) { // Obtener un usuario por su ID
+        Usuario usuario = repo.findById(id).orElse(null);
+        if (usuario != null) {
+            return usuario.getNombre();
+        } else {
+            return null;
+        }
     }
 
     public Usuario updateUsuario(Integer id, Usuario usuario) { // Actualizar un usuario

@@ -38,6 +38,12 @@ public class Usuario_Controlador {
         return new ResponseEntity<>(documento, HttpStatus.OK);
     }
 
+    @GetMapping("/sucursal/{documento}") // Obtener un usuario por su correo
+    public ResponseEntity<String> getUsuarioBySucursal(@PathVariable String documento){
+        String sucursal = servicio.getUsuarioBySucursal(documento);
+        return new ResponseEntity<>(sucursal, HttpStatus.OK);
+    }
+
     @GetMapping("/documento/{correo}") // Obtener un usuario por su correo
     public ResponseEntity<Rol_Usuario> getUsuarioByDocumento(@PathVariable String correo){
         Rol_Usuario rol = servicio.getUsuarioByDocumento(correo);
@@ -53,6 +59,12 @@ public class Usuario_Controlador {
     @GetMapping("/{id}") // Obtener un usuario por su ID
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id){
         Usuario usuario = servicio.getUsuarioById(id);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
+    @GetMapping("/nombre/{id}") // Obtener un usuario por su ID
+    public ResponseEntity<String> getUsuarioByNombre(@PathVariable String id){
+        String usuario = servicio.getUsuarioByNombre(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 

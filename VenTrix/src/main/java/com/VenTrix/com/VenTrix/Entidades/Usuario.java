@@ -35,6 +35,9 @@ public class Usuario {
     @Column(nullable = false, columnDefinition = "DATE")
     private LocalDate fecha_creacion;
 
+    @Column(nullable = false)
+    private String sucursal;
+
     @OneToMany(targetEntity = Restaurante.class, fetch = FetchType.LAZY, mappedBy = "usuario")
     @JsonManagedReference
     private List<Restaurante> restaurantes;
