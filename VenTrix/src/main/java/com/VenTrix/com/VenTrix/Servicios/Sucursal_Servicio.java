@@ -54,4 +54,9 @@ public class Sucursal_Servicio {
         repositorio.deleteById(id);
     }
 
+    public List<Sucursal> getSucursalesPorRestaurante(String idRestaurante) {
+        return repositorio.findByRestauranteId(idRestaurante); // Metodo para consultar las sucursales por restaurante
+    }
+
+
 }

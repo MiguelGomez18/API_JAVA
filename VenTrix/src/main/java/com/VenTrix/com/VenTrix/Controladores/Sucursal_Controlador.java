@@ -50,4 +50,11 @@ public class Sucursal_Controlador {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/restaurante/{id_restaurante}") // Obtener sucursales por id de restaurante
+    public ResponseEntity<List<Sucursal>> obtenerSucursalesPorRestaurante(@PathVariable String id_restaurante) {
+        List<Sucursal> sucursales = servicio.getSucursalesPorRestaurante(id_restaurante);
+        return new ResponseEntity<>(sucursales, HttpStatus.OK);
+    }
+
+
 }
