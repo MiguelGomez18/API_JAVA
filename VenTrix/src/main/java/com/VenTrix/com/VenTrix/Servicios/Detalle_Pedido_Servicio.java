@@ -1,0 +1,56 @@
+package com.VenTrix.com.VenTrix.Servicios;
+
+import com.VenTrix.com.VenTrix.Entidades.Detalle_Pedido;
+import com.VenTrix.com.VenTrix.Repositorios.Detalle_Pedido_Repositorio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class Detalle_Pedido_Servicio {
+
+    @Autowired
+    private Detalle_Pedido_Repositorio detallePedidoRepositorio;
+
+    // Crear un nuevo detalle de pedido
+    public Detalle_Pedido crearDetallePedido(Detalle_Pedido detallePedido) {
+        return detallePedidoRepositorio.save(detallePedido);
+    }
+
+    // Obtener todos los detalles de los pedidos
+    public List<Detalle_Pedido> obtenerTodosLosDetalles() {
+        return detallePedidoRepositorio.findAll();
+    }
+
+    // Obtener un detalle de pedido por ID
+    public Detalle_Pedido obtenerDetallePorId(int id) {
+        return detallePedidoRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Detalle de pedido no encontrado con ID: " + id));
+    }
+
+    // Actualizar un detalle de pedido
+    public Detalle_Pedido actualizarDetallePedido(int id, Detalle_Pedido detallePedido) {
+        Optional<Detalle_Pedido> detalleExistente = detallePedidoRepositorio.findById(id);
+        if (detalleExistente.isPresent()) {
+            Detalle_Pedido detalleActualizado = detalleExistente.get();
+            detalleActualizado.setCantidad(detallePedido.getCantidad());
+            detalleActualizado.setPrecio_unitario(detallePedido.getPrecio_unitario());
+            detalleActualizado.setPrecio_total(detallePedido.getPrecio_total());
+            detalleActualizado.setProducto(detallePedido.getProducto());
+            return detallePedidoRepositorio.save(detalleActualizado);
+        } else {
+            throw new RuntimeException("Detalle de pedido no encontrado con ID: " + id);
+        }
+    }
+
+    // Eliminar un detalle de pedido por ID
+    public void eliminarDetallePedido(int id) {
+        if (detallePedidoRepositorio.existsById(id)) {
+            detallePedidoRepositorio.deleteById(id);
+        } else {
+            throw new RuntimeException("Detalle de pedido no encontrado con ID: " + id);
+        }
+    }
+}

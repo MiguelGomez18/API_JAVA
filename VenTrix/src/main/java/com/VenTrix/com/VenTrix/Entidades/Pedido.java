@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -27,7 +28,7 @@ public class Pedido {
     private LocalDate fecha_pedido;
 
     @Column(nullable = false, columnDefinition = "DATE")
-    private LocalDate hora_pedido;
+    private LocalTime hora_pedido;
 
     @Column(nullable = false)
     private float total_pedido;
