@@ -1,6 +1,6 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,11 +35,11 @@ public class Usuario {
     @Column(nullable = false, columnDefinition = "DATE")
     private LocalDate fecha_creacion;
 
-    @Column(nullable = false)
+    @Column(nullable = true, length = 100)
     private String sucursal;
 
-    @OneToMany(targetEntity = Restaurante.class, fetch = FetchType.LAZY, mappedBy = "usuario")
-    @JsonManagedReference
-    private List<Restaurante> restaurantes;
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL) // Relación inversa uno a uno
+    @JsonBackReference
+    private Restaurante restaurante;
 
 }
