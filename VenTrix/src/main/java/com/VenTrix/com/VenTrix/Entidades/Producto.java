@@ -39,6 +39,7 @@ public class Producto {
     private boolean disponibilidad;
 
     @OneToMany(targetEntity = Detalle_Pedido.class, fetch = FetchType.LAZY, mappedBy = "producto")
+    @JsonBackReference
     private List<Detalle_Pedido> detalle_pedido;
 
     @ManyToOne(targetEntity = Sucursal.class)
