@@ -1,10 +1,13 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data // Incluye los getters, setters y toString
@@ -29,4 +32,7 @@ public class Detalle_Pedido {
      @ManyToOne
      @JoinColumn(name = "id_producto")
      private Producto producto;
+
+     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "detalle_pedido")
+     private List<Pedido> pedido;
 }
