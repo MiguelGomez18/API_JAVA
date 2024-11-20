@@ -76,4 +76,7 @@ public class Usuario_Servicio {
        return repo.findAll();
     }
 
+    public List<Usuario> getAllUsuariosSucursal(String sucursal) { // Obtener todos los usuarios
+        return repo.findBySucursal(sucursal);
+    }
 }

@@ -56,6 +56,12 @@ public class Usuario_Controlador {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
+    @GetMapping("/sucursales/{sucursal}") // Listar todos los usuarios
+    public ResponseEntity<List<Usuario>> listarSucursal(@PathVariable String sucursal){
+        List<Usuario> lista = servicio.getAllUsuariosSucursal(sucursal);
+        return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}") // Obtener un usuario por su ID
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id){
         Usuario usuario = servicio.getUsuarioById(id);
