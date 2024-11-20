@@ -32,13 +32,13 @@ public class Sucursal_Controlador {
         return new ResponseEntity<>(sucursal, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}") // Obtener una sucursal por su ID
+    @GetMapping("/{id_sucursal}") // Obtener una sucursal por su ID
     public ResponseEntity<Sucursal> obtenerSucursal(@PathVariable String id_sucursal) {
         Sucursal sucursal = servicio.getSucursalById(id_sucursal);
         return new ResponseEntity<>(sucursal, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}") // Actualizar una sucursal por su ID
+    @PutMapping("/{id_sucursal}") // Actualizar una sucursal por su ID
     public ResponseEntity<Sucursal> actualizarSucursal(@PathVariable String id_sucursal, @RequestBody Sucursal sucursal) {
         Sucursal updateSucursal = servicio.updateSucursal(id_sucursal, sucursal);
         return new ResponseEntity<>(updateSucursal, HttpStatus.OK);

@@ -31,9 +31,15 @@ public class Restaurante_Controlador {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
+    @GetMapping("/nombre/{id}") // Obtener un restaurante por su id
+    public ResponseEntity<String> getRestauranteByNombre(@PathVariable String id){
+        String restaurante = servicio.getRestauranteByNombre(id);
+        return new ResponseEntity<>(restaurante, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}") // Obtener un restaurante por su id
-    public ResponseEntity<String> getRestauranteById(@PathVariable String id){
-        String restaurante = servicio.getRestauranteById(id);
+    public ResponseEntity<Restaurante> getRestauranteById(@PathVariable String id){
+        Restaurante restaurante = servicio.getRestauranteById(id);
         return new ResponseEntity<>(restaurante, HttpStatus.OK);
     }
 
