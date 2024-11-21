@@ -1,6 +1,7 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,5 +30,6 @@ public class Mesa {
     private Sucursal sucursal;
 
     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "mesa")
+    @JsonIncludeProperties("id_pedido")
     private List<Pedido> pedido;
 }

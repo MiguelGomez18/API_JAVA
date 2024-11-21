@@ -26,6 +26,9 @@ public class Detalle_Pedido {
      @Column(nullable = false)
      private float precio_total;
 
+     @Column(nullable = false)
+     private String sucursal;
+
      @ManyToOne
      @JoinColumn(name = "id_producto")
      private Producto producto;

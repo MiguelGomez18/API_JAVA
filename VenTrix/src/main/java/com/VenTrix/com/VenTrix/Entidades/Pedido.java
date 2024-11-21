@@ -27,12 +27,18 @@ public class Pedido {
     @Column(nullable = false, columnDefinition = "TIME")
     private LocalTime hora_pedido;
 
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "float default 0.0")
     private float total_pedido;
 
     @ManyToOne(targetEntity = Mesa.class)
     @JoinColumn(name = "id_mesa")
     private Mesa mesa;
+
+    @Column(nullable = true)
+    private String nombre;
+
+    @Column(nullable = false)
+    private String sucursal;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_pago")
