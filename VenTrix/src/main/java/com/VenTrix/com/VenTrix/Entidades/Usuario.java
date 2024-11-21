@@ -38,6 +38,9 @@ public class Usuario {
     @Column(nullable = true, length = 100)
     private String sucursal;
 
+    @Enumerated(EnumType.STRING)
+    private Estado_Usuario estado;
+
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL) // Relación inversa uno a uno
     @JsonBackReference
     private Restaurante restaurante;
