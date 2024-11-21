@@ -27,7 +27,6 @@ public class Pedido_Servicio {
             pedidoActualizado.setFecha_pedido(pedido.getFecha_pedido());
             pedidoActualizado.setHora_pedido(pedido.getHora_pedido());
             pedidoActualizado.setTotal_pedido(pedido.getTotal_pedido());
-            pedidoActualizado.setNumero_pedido(pedido.getNumero_pedido());
             pedidoActualizado.setMesa(pedido.getMesa());
             pedidoActualizado.setTipo_pago(pedido.getTipo_pago());
             return pedidoRepositorio.save(pedidoActualizado);

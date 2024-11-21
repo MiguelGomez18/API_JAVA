@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 
 public class Pedido {
 
@@ -21,16 +21,13 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_pedido;
 
-    @Column(nullable = false)
-    private  int numero_pedido;
-
     @Column(nullable = false, columnDefinition = "DATE")
     private LocalDate fecha_pedido;
 
-    @Column(nullable = false, columnDefinition = "DATE")
+    @Column(nullable = false, columnDefinition = "TIME")
     private LocalTime hora_pedido;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float total_pedido;
 
     @ManyToOne(targetEntity = Mesa.class)
@@ -41,8 +38,7 @@ public class Pedido {
     @JoinColumn(name = "id_tipo_pago")
     private Tipo_pago tipo_pago;
 
-    @ManyToOne
-    @JoinColumn(name = "id_detalle_pedido")
-    private Detalle_Pedido detalle_pedido;
+    @OneToMany(targetEntity = Detalle_Pedido.class, fetch = FetchType.LAZY, mappedBy = "pedido")
+    private List<Detalle_Pedido> detalle_pedido;
 
 }

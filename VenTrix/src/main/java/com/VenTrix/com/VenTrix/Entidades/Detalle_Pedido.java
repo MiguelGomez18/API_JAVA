@@ -24,15 +24,13 @@ public class Detalle_Pedido {
      private int cantidad;
 
      @Column(nullable = false)
-     private float precio_unitario;
-
-     @Column(nullable = false)
      private float precio_total;
 
      @ManyToOne
      @JoinColumn(name = "id_producto")
      private Producto producto;
 
-     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "detalle_pedido")
-     private List<Pedido> pedido;
+     @ManyToOne
+     @JoinColumn(name = "id_pedido")
+     private Pedido pedido;
 }

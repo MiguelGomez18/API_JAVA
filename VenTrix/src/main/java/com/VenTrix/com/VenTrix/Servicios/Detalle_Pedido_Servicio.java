@@ -36,7 +36,6 @@ public class Detalle_Pedido_Servicio {
         if (detalleExistente.isPresent()) {
             Detalle_Pedido detalleActualizado = detalleExistente.get();
             detalleActualizado.setCantidad(detallePedido.getCantidad());
-            detalleActualizado.setPrecio_unitario(detallePedido.getPrecio_unitario());
             detalleActualizado.setPrecio_total(detallePedido.getPrecio_total());
             detalleActualizado.setProducto(detallePedido.getProducto());
             return detallePedidoRepositorio.save(detalleActualizado);
