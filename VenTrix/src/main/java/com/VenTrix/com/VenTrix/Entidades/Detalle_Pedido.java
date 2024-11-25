@@ -38,10 +38,11 @@ public class Detalle_Pedido {
 
      @ManyToOne(targetEntity = Producto.class)
      @JoinColumn(name = "id_producto")
+     @JsonIncludeProperties({"id_producto", "nombre", "imagen"})
      private Producto producto;
 
      @ManyToOne(targetEntity = Pedido.class)
      @JoinColumn(name = "id_pedido")
-     @JsonBackReference
+     @JsonIncludeProperties({"id_pedido, fecha_pedido"})
      private Pedido pedido;
 }
