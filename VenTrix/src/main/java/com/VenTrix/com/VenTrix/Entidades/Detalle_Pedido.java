@@ -43,6 +43,6 @@ public class Detalle_Pedido {
 
      @ManyToOne(targetEntity = Pedido.class)
      @JoinColumn(name = "id_pedido")
-     @JsonIncludeProperties({"id_pedido, fecha_pedido, nombre"})
+     @JsonIncludeProperties({"id_pedido", "fecha_pedido", "nombre"})
      private Pedido pedido;
 }
