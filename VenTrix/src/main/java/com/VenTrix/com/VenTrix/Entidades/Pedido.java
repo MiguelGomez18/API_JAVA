@@ -1,6 +1,7 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,12 +28,12 @@ public class Pedido {
     @Column(nullable = false, columnDefinition = "TIME")
     private LocalTime hora_pedido;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'ORDENADO'")
+    private Estado_Pedido estado;
+
     @Column(nullable = true, columnDefinition = "float default 0.0")
     private float total_pedido;
-
-    @ManyToOne(targetEntity = Mesa.class)
-    @JoinColumn(name = "id_mesa")
-    private Mesa mesa;
 
     @Column(nullable = true)
     private String nombre;
@@ -40,11 +41,18 @@ public class Pedido {
     @Column(nullable = false)
     private String sucursal;
 
+    @ManyToOne(targetEntity = Mesa.class)
+    @JoinColumn(name = "id_mesa")
+    @JsonIncludeProperties("id")
+    private Mesa mesa;
+
     @ManyToOne
     @JoinColumn(name = "id_tipo_pago")
+    @JsonIncludeProperties("id")
     private Tipo_pago tipo_pago;
 
     @OneToMany(targetEntity = Detalle_Pedido.class, fetch = FetchType.LAZY, mappedBy = "pedido")
+    @JsonBackReference
     private List<Detalle_Pedido> detalle_pedido;
 
 }

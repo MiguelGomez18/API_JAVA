@@ -15,8 +15,9 @@ public class Pedido_Servicio {
     private Pedido_Repositorio pedidoRepositorio;
 
     // Crear un nuevo pedido
-    public Pedido crearPedido(Pedido pedido) {
-        return pedidoRepositorio.save(pedido);
+    public int crearPedido(Pedido pedido) {
+        pedidoRepositorio.save(pedido);
+        return pedido.getId_pedido();
     }
 
     // Actualizar un pedido existente

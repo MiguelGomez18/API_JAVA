@@ -1,12 +1,13 @@
 package com.VenTrix.com.VenTrix.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -23,17 +24,24 @@ public class Detalle_Pedido {
      @Column(nullable = false)
      private int cantidad;
 
+     @Column(nullable = false, columnDefinition = "TIME")
+     private LocalTime hora_detalle;
+
+     @Column(nullable = true, length = 200)
+     private String descripcion;
+
      @Column(nullable = false)
      private float precio_total;
 
      @Column(nullable = false)
      private String sucursal;
 
-     @ManyToOne
+     @ManyToOne(targetEntity = Producto.class)
      @JoinColumn(name = "id_producto")
      private Producto producto;
 
-     @ManyToOne
+     @ManyToOne(targetEntity = Pedido.class)
      @JoinColumn(name = "id_pedido")
+     @JsonBackReference
      private Pedido pedido;
 }

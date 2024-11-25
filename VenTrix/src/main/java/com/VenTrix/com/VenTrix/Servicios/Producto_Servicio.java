@@ -45,7 +45,6 @@ public class Producto_Servicio {
             producto.setNombre(productoDetalles.getNombre());
             producto.setPrecio(productoDetalles.getPrecio());
             producto.setCategoria(productoDetalles.getCategoria());
-            producto.setDescripcion(productoDetalles.getDescripcion());
             producto.setImagen(productoDetalles.getImagen());
             producto.setDisponibilidad(productoDetalles.isDisponibilidad());
             repositorio.save(producto);

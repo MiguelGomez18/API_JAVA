@@ -26,9 +26,6 @@ public class Producto {
     @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Column(nullable = true, length = 200)
-    private String descripcion;
-
     @Column(nullable = false)
     private float precio;
 

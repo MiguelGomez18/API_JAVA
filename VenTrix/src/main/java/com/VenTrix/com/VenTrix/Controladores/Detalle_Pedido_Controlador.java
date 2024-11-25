@@ -31,6 +31,11 @@ public class Detalle_Pedido_Controlador {
         return detallePedidoServicio.obtenerDetallePorId(id);
     }
 
+    @GetMapping("/pedidos/{id_pedido}")
+    public List<Detalle_Pedido> obtenerDetallePorId_pedido(@PathVariable("id_pedido") int id_pedido) {
+        return detallePedidoServicio.obtenerDetallePorId_pedido(id_pedido);
+    }
+
     @GetMapping
     public List<Detalle_Pedido> obtenerTodosLosDetalles() {
         return detallePedidoServicio.obtenerTodosLosDetalles();

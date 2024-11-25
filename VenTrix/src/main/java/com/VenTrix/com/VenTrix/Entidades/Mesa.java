@@ -30,6 +30,6 @@ public class Mesa {
     private Sucursal sucursal;
 
     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "mesa")
-    @JsonIncludeProperties("id_pedido")
+    @JsonIncludeProperties({"id_pedido","total_pedido","tipo_pago","estado"})
     private List<Pedido> pedido;
 }

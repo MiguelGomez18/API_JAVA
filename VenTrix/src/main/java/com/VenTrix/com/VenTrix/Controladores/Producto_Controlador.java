@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/producto")
 public class Producto_Controlador {
 
-    private static final String DIRECTORIO_IMAGENES = "src/main/resources/imagenes/";
+    private static final String DIRECTORIO_IMAGENES = "src/main/resources/imagenes/productos/";
 
     @Autowired
     private Producto_Servicio servicio;
@@ -40,7 +40,6 @@ public class Producto_Controlador {
     public ResponseEntity<Producto> crearProducto(
             @RequestParam("nombre") String nombre,
             @RequestParam("precio") float precio,
-            @RequestParam("descripcion") String descripcion,
             @RequestParam("disponibilidad") boolean disponibilidad,
             @RequestParam("id_categoria") int categoriaId,
             @RequestParam("id_sucursal") String id_sucursal,
@@ -55,7 +54,6 @@ public class Producto_Controlador {
             Producto producto = new Producto();
             producto.setNombre(nombre);
             producto.setPrecio(precio);
-            producto.setDescripcion(descripcion);
             producto.setDisponibilidad(disponibilidad);
             producto.setSucursal(sucursal);
             producto.setImagen(nombreArchivo);
@@ -65,7 +63,7 @@ public class Producto_Controlador {
             if (!imagen.isEmpty()) {
                 nombreArchivo = guardarImagenEnDirectorio(nuevoProducto.getId_producto(), imagen);
             }
-            nuevoProducto.setImagen("/imagenes/" + nuevoProducto.getId_producto() + "-" + nombreArchivo);
+            nuevoProducto.setImagen("/imagenes/productos/" + nuevoProducto.getId_producto() + "-" + nombreArchivo);
             nuevoProducto = servicio.actualizarProducto(nuevoProducto.getId_producto(), nuevoProducto);
 
             return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
@@ -130,7 +128,6 @@ public class Producto_Controlador {
                                                        @RequestParam("nombre") String nombre,
                                                        @RequestParam("precio") Integer precio,
                                                        @RequestParam("id_categoria") int categoriaId,
-                                                       @RequestParam("descripcion") String descripcion,
                                                        @RequestParam("imagen") MultipartFile imagen,
                                                        @RequestParam("disponibilidad") boolean disponibilidad) {
 
@@ -158,14 +155,12 @@ public class Producto_Controlador {
             productoExistente.setNombre(nombre);
             productoExistente.setPrecio(precio);
             productoExistente.setCategoria(categoria);
-            productoExistente.setDescripcion(descripcion);
             productoExistente.setDisponibilidad(disponibilidad);
-            productoExistente.setImagen(nombreArchivo != null ? "/imagenes/"+ id + "-" + nombreArchivo : null);  // Ruta pública
+            productoExistente.setImagen(nombreArchivo != null ? "/imagenes/productos/"+ id + "-" + nombreArchivo : null);
 
             Producto productoActualizado = servicio.actualizarProducto(id, productoExistente);
             return new ResponseEntity<>(productoActualizado, HttpStatus.OK);
         } catch (IOException e) {
-            System.out.println("entra");
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
