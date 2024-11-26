@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Producto;
 import com.VenTrix.com.VenTrix.Entidades.Restaurante;
 import com.VenTrix.com.VenTrix.Entidades.Usuario;
 import com.VenTrix.com.VenTrix.Repositorios.Restaurante_Repositorio;
@@ -39,15 +40,22 @@ public class Restaurante_Servicio {
     }
 
     public Restaurante updateRestaurante(String id_restaurante,Restaurante restaurante){ //actualizar un restaurante
-        if (repositorio.existsById(id_restaurante)) {
-            return repositorio.save(restaurante);
-        } else {
-            return null;
+        Restaurante restaurante1 = repositorio.findById(id_restaurante).orElse(null);
+        if (restaurante1 != null) {
+            restaurante1.setNombre(restaurante.getNombre());
+            restaurante1.setDescripcion(restaurante.getDescripcion());
+            restaurante1.setTelefono(restaurante.getTelefono());
+            restaurante1.setDireccion(restaurante.getDireccion());
+            restaurante1.setCorreo(restaurante.getCorreo());
+            restaurante1.setImagen(restaurante.getImagen());
+            repositorio.save(restaurante1);
         }
+        return restaurante1;
     }
 
-    public void deleteRestaurante(String id){ //eliminar un restaurante
+    public boolean deleteRestaurante(String id){ //eliminar un restaurante
         repositorio.deleteById(id);
+        return true;
     }
 
     public List<Restaurante> listar(){
