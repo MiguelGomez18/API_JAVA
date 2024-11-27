@@ -27,6 +27,10 @@ public class Detalle_Pedido {
      @Column(nullable = false, columnDefinition = "TIME")
      private LocalTime hora_detalle;
 
+     @Enumerated(EnumType.STRING)
+     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'PREPARANDO'")
+     private Estado_Detalle estado;
+
      @Column(nullable = true, length = 200)
      private String descripcion;
 

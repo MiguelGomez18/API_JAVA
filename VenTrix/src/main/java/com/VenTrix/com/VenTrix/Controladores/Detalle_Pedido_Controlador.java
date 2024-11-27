@@ -41,6 +41,11 @@ public class Detalle_Pedido_Controlador {
         return detallePedidoServicio.obtenerTodosLosDetalles();
     }
 
+    @GetMapping("/sucursal/{sucursal}")
+    public List<Detalle_Pedido> obtenerTodosLosDetallesPorSucursal(@PathVariable("sucursal") String sucursal) {
+        return detallePedidoServicio.obtenerTodosLosDetallesPorSucursal(sucursal);
+    }
+
     @DeleteMapping("/{id}")
     public void eliminarDetallePedido(@PathVariable int id) {
         detallePedidoServicio.eliminarDetallePedido(id);

@@ -29,6 +29,10 @@ public class Detalle_Pedido_Servicio {
         return detallePedidoRepositorio.findAll();
     }
 
+    public List<Detalle_Pedido> obtenerTodosLosDetallesPorSucursal(String sucursal) {
+        return detallePedidoRepositorio.findBySucursal(sucursal);
+    }
+
     // Obtener un detalle de pedido por ID
     public Detalle_Pedido obtenerDetallePorId(int id) {
         return detallePedidoRepositorio.findById(id)
@@ -45,9 +49,7 @@ public class Detalle_Pedido_Servicio {
         Optional<Detalle_Pedido> detalleExistente = detallePedidoRepositorio.findById(id);
         if (detalleExistente.isPresent()) {
             Detalle_Pedido detalleActualizado = detalleExistente.get();
-            detalleActualizado.setCantidad(detallePedido.getCantidad());
-            detalleActualizado.setPrecio_total(detallePedido.getPrecio_total());
-            detalleActualizado.setProducto(detallePedido.getProducto());
+            detalleActualizado.setEstado(detallePedido.getEstado());
             return detallePedidoRepositorio.save(detalleActualizado);
         } else {
             throw new RuntimeException("Detalle de pedido no encontrado con ID: " + id);

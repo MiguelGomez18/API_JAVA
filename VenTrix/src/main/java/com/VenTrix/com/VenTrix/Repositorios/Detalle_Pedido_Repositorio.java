@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface Detalle_Pedido_Repositorio extends JpaRepository<Detalle_Pedido, Integer> {
     List<Detalle_Pedido> findByPedido(Pedido pedido);
-
+    List<Detalle_Pedido> findBySucursal(String sucursal);
 }
