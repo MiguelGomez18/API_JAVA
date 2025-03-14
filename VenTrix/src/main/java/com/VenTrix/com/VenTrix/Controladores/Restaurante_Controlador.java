@@ -2,6 +2,7 @@ package com.VenTrix.com.VenTrix.Controladores;
 
 import com.VenTrix.com.VenTrix.Entidades.*;
 import com.VenTrix.com.VenTrix.Servicios.Restaurante_Servicio;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,12 @@ public class Restaurante_Controlador {
                                                         @RequestParam("fecha_creacion") LocalDate fecha_creacion,
                                                         @RequestParam("fecha_finalizacion") LocalDate fecha_finalizacion,
                                                         @RequestParam("estado") Estado_Restaurante estado,
-                                                        @RequestParam("usuario") Usuario usuario) {
+                                                        @RequestParam("usuario") String usuarioJson) {
         try {
             String nombreArchivo = "h";
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            Usuario usuario = objectMapper.readValue(usuarioJson, Usuario.class);
 
             Restaurante restaurante = new Restaurante();
             restaurante.setId(id);
