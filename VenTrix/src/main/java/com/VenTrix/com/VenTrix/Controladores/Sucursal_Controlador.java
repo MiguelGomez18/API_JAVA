@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Controladores;
 
+import com.VenTrix.com.VenTrix.Entidades.Restaurante;
 import com.VenTrix.com.VenTrix.Entidades.Sucursal;
 import com.VenTrix.com.VenTrix.Servicios.Sucursal_Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class Sucursal_Controlador {
 
 
     @GetMapping("/id_usuario/{administrador}") // Obtener un usuario por su correo
-    public ResponseEntity<String> getUsuarioByDocumento(@PathVariable("administrador") String administrador){
+    public ResponseEntity<String> getUsuarioByDocumento(@PathVariable("administrador") String administrador) {
         String sucursal = servicio.getByAdministrador(administrador);
         return new ResponseEntity<>(sucursal, HttpStatus.OK);
     }
@@ -36,6 +37,18 @@ public class Sucursal_Controlador {
     public ResponseEntity<Sucursal> obtenerSucursal(@PathVariable String id_sucursal) {
         Sucursal sucursal = servicio.getSucursalById(id_sucursal);
         return new ResponseEntity<>(sucursal, HttpStatus.OK);
+    }
+
+    @GetMapping("/restaurante/{id_restaurante}") // Obtener sucursales por id de restaurante
+    public ResponseEntity<List<Sucursal>> obtenerSucursalesPorRestaurante(@PathVariable String id_restaurante) {
+        List<Sucursal> sucursales = servicio.getSucursalesPorRestaurante(id_restaurante);
+        return new ResponseEntity<>(sucursales, HttpStatus.OK);
+    }
+
+    @GetMapping("/id_restaurante/{id_restaurante}") // Obtener restaurante por id de sucursal
+    public ResponseEntity<String> obtenerRestaurantePorSucursal(@PathVariable String id_restaurante) {
+        String restaurante = servicio.getRestaurantePorId(id_restaurante);
+        return new ResponseEntity<>(restaurante, HttpStatus.OK);
     }
 
     @PutMapping("/{id_sucursal}") // Actualizar una sucursal por su ID
@@ -48,12 +61,6 @@ public class Sucursal_Controlador {
     public ResponseEntity<Void> eliminarSucursal(@PathVariable String id_sucursal) {
         servicio.deleteSucursal(id_sucursal);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("/restaurante/{id_restaurante}") // Obtener sucursales por id de restaurante
-    public ResponseEntity<List<Sucursal>> obtenerSucursalesPorRestaurante(@PathVariable String id_restaurante) {
-        List<Sucursal> sucursales = servicio.getSucursalesPorRestaurante(id_restaurante);
-        return new ResponseEntity<>(sucursales, HttpStatus.OK);
     }
 
 

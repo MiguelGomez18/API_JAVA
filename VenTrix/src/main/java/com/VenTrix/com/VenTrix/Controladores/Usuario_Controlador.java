@@ -27,8 +27,11 @@ public class Usuario_Controlador {
     }
 
     @PostMapping("/login") // Login de un usuario
-    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario){
+    public ResponseEntity<?> login(@RequestBody Usuario usuario){
         Usuario saveUsuario = servicio.login(usuario.getCorreo(), usuario.getPassword());
+        if (saveUsuario == null) {
+            return new ResponseEntity<>("Credenciales incorrectas", HttpStatus.UNAUTHORIZED);
+        }
         return new ResponseEntity<>(saveUsuario, HttpStatus.OK);
     }
 

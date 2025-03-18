@@ -41,6 +41,15 @@ public class Sucursal_Servicio {
         }
     }
 
+    public String getRestaurantePorId(String id) { // Obtener un sucursal por su id
+        Sucursal sucu = repositorio.findById(id).orElse(null);
+        if (sucu != null) {
+            return sucu.getRestaurante().getId();
+        } else {
+            return null;
+        }
+    }
+
     public Sucursal updateSucursal(String id, Sucursal sucursal) { // actualizar sucursal
         if (repositorio.existsById(id)) {
             Sucursal sucu = repositorio.findById(id).orElse(null);
