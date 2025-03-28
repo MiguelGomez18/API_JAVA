@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,6 +32,10 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'ORDENADO'")
     private Estado_Pedido estado;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVO'")
+    private Activo activo;
 
     @Column(nullable = true, columnDefinition = "float default 0.0")
     private float total_pedido;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -23,6 +24,10 @@ public class Mesa {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Estado_Mesa estado;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVO'")
+    private Activo activo;
 
     @ManyToOne(targetEntity = Sucursal.class)
     @JoinColumn(name = "id_sucursal")

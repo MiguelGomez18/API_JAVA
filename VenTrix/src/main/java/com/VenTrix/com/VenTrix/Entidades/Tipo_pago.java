@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -26,6 +27,10 @@ public class Tipo_pago {
 
     @Column(nullable = false)
     private String sucursal;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVO'")
+    private Activo activo;
 
     @OneToMany(targetEntity = Pedido.class, fetch = FetchType.LAZY, mappedBy = "tipo_pago")
     @JsonIncludeProperties("id_pedidos")

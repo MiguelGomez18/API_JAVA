@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +35,10 @@ public class Producto {
 
     @Column(nullable = false)
     private boolean disponibilidad;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'ACTIVO'")
+    private Activo activo;
 
     @OneToMany(targetEntity = Detalle_Pedido.class, fetch = FetchType.LAZY, mappedBy = "producto")
     @JsonBackReference
