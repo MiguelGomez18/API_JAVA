@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Estado_Usuario;
 import com.VenTrix.com.VenTrix.Entidades.Rol_Usuario;
 import com.VenTrix.com.VenTrix.Entidades.Usuario;
 import com.VenTrix.com.VenTrix.Repositorios.Usuario_Repositorio;
@@ -88,7 +89,9 @@ public class Usuario_Servicio {
     }
 
     public void deleteUsuario(String id) { // Eliminar un usuario
-        repo.deleteById(id);
+        Usuario usuario = repo.findById(id).orElse(null);
+        usuario.setEstado(Estado_Usuario.INACTIVO);
+        repo.save(usuario);
     }
 
     public List<Usuario> getAllUsuarios() { // Obtener todos los usuarios

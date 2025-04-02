@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Activo;
 import com.VenTrix.com.VenTrix.Entidades.Categoria;
 import com.VenTrix.com.VenTrix.Entidades.Producto;
 import com.VenTrix.com.VenTrix.Repositorios.Categoria_Repositorio;
@@ -34,7 +35,9 @@ public class Categoria_Servicio {
     }
 
     public void deleteCategoria(Integer id) { // Eliminar una categoría
-        repositorio.deleteById(id);
+        Categoria categoria = repositorio.findById(id).orElse(null);
+        categoria.setActivo(Activo.INACTIVO);
+        repositorio.save(categoria);
     }
 
     public List<Categoria> listarCategorias() {

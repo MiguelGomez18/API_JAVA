@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Activo;
 import com.VenTrix.com.VenTrix.Entidades.Estado_Mesa;
 import com.VenTrix.com.VenTrix.Entidades.Mesa;
 import com.VenTrix.com.VenTrix.Repositorios.Mesa_Repositorio;
@@ -41,7 +42,9 @@ public class Mesa_Servicio {
     }
 
     public void deleteMesa(String id) { // Eliminar una mesa
-        repositorio.deleteById(id);
+        Mesa mesa = repositorio.findById(id).orElse(null);
+        mesa.setActivo(Activo.INACTIVO);
+        repositorio.save(mesa);
     }
 
     public List<Mesa> listar() {

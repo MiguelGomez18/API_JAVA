@@ -1,9 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
-import com.VenTrix.com.VenTrix.Entidades.Restaurante;
-import com.VenTrix.com.VenTrix.Entidades.Rol_Usuario;
-import com.VenTrix.com.VenTrix.Entidades.Sucursal;
-import com.VenTrix.com.VenTrix.Entidades.Usuario;
+import com.VenTrix.com.VenTrix.Entidades.*;
 import com.VenTrix.com.VenTrix.Repositorios.Restaurante_Repositorio;
 import com.VenTrix.com.VenTrix.Repositorios.Sucursal_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +58,9 @@ public class Sucursal_Servicio {
     }
 
     public void deleteSucursal(String id){ //eliminar sucursal
-        repositorio.deleteById(id);
+        Sucursal sucursal = repositorio.findById(id).orElse(null);
+        sucursal.setEstado(Estado_Sucursal.INACTIVO);
+        repositorio.save(sucursal);
     }
 
     public List<Sucursal> getSucursalesPorRestaurante(String idRestaurante) {

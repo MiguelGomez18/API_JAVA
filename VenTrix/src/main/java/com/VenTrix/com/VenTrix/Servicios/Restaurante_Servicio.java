@@ -1,5 +1,6 @@
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Estado_Restaurante;
 import com.VenTrix.com.VenTrix.Entidades.Producto;
 import com.VenTrix.com.VenTrix.Entidades.Restaurante;
 import com.VenTrix.com.VenTrix.Entidades.Usuario;
@@ -54,7 +55,9 @@ public class Restaurante_Servicio {
     }
 
     public boolean deleteRestaurante(String id){ //eliminar un restaurante
-        repositorio.deleteById(id);
+        Restaurante restaurante = repositorio.findById(id).orElse(null);
+        restaurante.setEstado(Estado_Restaurante.INACTIVO);
+        repositorio.save(restaurante);
         return true;
     }
 

@@ -1,6 +1,7 @@
 
 package com.VenTrix.com.VenTrix.Servicios;
 
+import com.VenTrix.com.VenTrix.Entidades.Activo;
 import com.VenTrix.com.VenTrix.Entidades.Tipo_pago;
 import com.VenTrix.com.VenTrix.Repositorios.Tipo_pago_Repositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class Tipo_pago_Servicio {
 
     public Tipo_pago updateTipoPago(int id, Tipo_pago tipo_pago) { return repositorio.save(tipo_pago);}
 
-    public void deleteTipoPago(int id) { repositorio.deleteById(id);}
-
+    public void deleteTipoPago(int id) {
+        Tipo_pago tipopago = repositorio.findById(id).orElse(null);
+        tipopago.setActivo(Activo.INACTIVO);
+        repositorio.save(tipopago);
+    }
 }
