@@ -115,6 +115,7 @@ public class Restaurante_Controlador {
                                                          @RequestParam("descripcion") String descripcion,
                                                          @RequestParam("telefono") String telefono,
                                                          @RequestParam("direccion") String direccion,
+                                                         @RequestParam("fecha_finalizacion") LocalDate fecha_finalizacion,
                                                          @RequestParam("correo") String correo,
                                                          @RequestParam("imagen") MultipartFile imagen) {
         try {
@@ -140,6 +141,7 @@ public class Restaurante_Controlador {
             restauranteExistente.setDescripcion(descripcion);
             restauranteExistente.setTelefono(telefono);
             restauranteExistente.setDireccion(direccion);
+            restauranteExistente.setFecha_finalizacion(fecha_finalizacion);
             restauranteExistente.setCorreo(correo);
             restauranteExistente.setImagen(nombreArchivo != null ? "/imagenes/restaurantes/"+ id + "-" + nombreArchivo : null);
 
