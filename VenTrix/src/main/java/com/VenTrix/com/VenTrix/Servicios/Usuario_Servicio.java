@@ -47,6 +47,15 @@ public class Usuario_Servicio {
         }
     }
 
+    public boolean existeUsuarioPorCorreo(String correo) { // Obtener un usuario por su correo
+        Usuario usuario = repo.findByCorreo(correo);
+        if (usuario != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Rol_Usuario getUsuarioByDocumento(String coreo) { // Obtener un usuario por su correo
         Usuario usuario = repo.findByCorreo(coreo);
         if (usuario != null) {

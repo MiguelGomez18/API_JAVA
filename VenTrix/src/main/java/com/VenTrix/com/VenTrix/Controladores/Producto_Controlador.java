@@ -19,7 +19,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/producto")
 public class Producto_Controlador {
