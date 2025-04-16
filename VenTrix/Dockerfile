@@ -3,19 +3,17 @@ FROM openjdk:21-jdk AS builder
 
 WORKDIR /app
 
-# 1. Instala Maven y configura el entorno
+# 1. Instalar Maven directamente (sin usar el wrapper)
 RUN apt-get update && \
-    apt-get install -y maven && \
-    rm -f mvnw* && \
-    rm -rf .mvn/
+    apt-get install -y maven
 
-# 2. Copia el POM primero para cachear dependencias
+# 2. Copiar solo el POM primero para cachear dependencias
 COPY pom.xml .
 
-# 3. Descarga dependencias
+# 3. Descargar dependencias
 RUN mvn dependency:go-offline -B
 
-# 4. Copia el código fuente y compila
+# 4. Copiar el código fuente y compilar
 COPY src/ src/
 RUN mvn clean package -DskipTests
 
@@ -23,12 +21,11 @@ RUN mvn clean package -DskipTests
 FROM openjdk:21-jre
 WORKDIR /app
 
-# Copia el JAR construido
+# Copiar el JAR construido
 COPY --from=builder /app/target/VenTrix-0.0.1-SNAPSHOT.jar app.jar
 
-# Crea estructura de directorios
-RUN mkdir -p /app/tokens && \
-    chmod -R 755 /app
+# Crear estructura de directorios necesaria
+RUN mkdir -p /app/tokens
 
 EXPOSE 8890
 ENTRYPOINT ["java", "-jar", "app.jar"]
