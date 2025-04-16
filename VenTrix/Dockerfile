@@ -3,21 +3,26 @@ FROM openjdk:21-jdk AS builder
 
 WORKDIR /app
 
-# 1. Instalar Maven directamente (sin usar el wrapper)
-RUN apt-get update && \
-    apt-get install -y maven
+RUN rm -rf ~/.m2/repository/org/apache/maven/wrapper
 
-# 2. Copiar solo el POM primero para cachear dependencias
+# 1. Copiar los archivos del wrapper Maven primero
+COPY .mvn/ .mvn/
+COPY mvnw .
+
+# 2. Dar permisos ejecutables al wrapper
+RUN chmod +x mvnw
+
+# 3. Copiar el POM para cachear dependencias
 COPY pom.xml .
 
-# 3. Descargar dependencias
-RUN mvn dependency:go-offline -B
+# 4. Descargar dependencias usando el wrapper
+RUN ./mvnw dependency:go-offline -B
 
-# 4. Copiar el código fuente y compilar
+# 5. Copiar el código fuente y compilar
 COPY src/ src/
-RUN mvn clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
-# Fase de producción con JRE 21 (más ligero)
+# Fase de producción con JRE 21
 FROM openjdk:21-jre
 WORKDIR /app
 
