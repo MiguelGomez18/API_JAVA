@@ -1,29 +1,31 @@
-# Usamos la imagen oficial de Eclipse Temurin con JDK 21
+# Fase de construcción
 FROM eclipse-temurin:21-jdk-alpine AS builder
 
 WORKDIR /app
 
-# Copiamos primero solo los archivos necesarios para la caché
+# Copiar archivos de Maven primero para aprovechar la caché
 COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./
 
-# Descargamos dependencias (esto aprovecha la caché de Docker)
+# Descargar dependencias
 RUN ./mvnw dependency:go-offline -B
 
-# Copiamos el resto del código fuente
+# Copiar código fuente
 COPY src/ src/
 
-RUN apt-get update && \
-    apt-get install -y maven && \
-    mvn -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean package
-
-# Construimos la aplicación
+# Construir la aplicación (saltando tests)
 RUN ./mvnw clean package -DskipTests
 
-# Etapa de producción
-FROM eclipse-temurin:21-jdk-alpine
+# Fase de producción
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
+
+# Copiar el jar desde la fase de construcción
 COPY --from=builder /app/target/*.jar app.jar
+
+# Crear directorio para tokens
 RUN mkdir -p /app/tokens
+
 EXPOSE 8890
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
