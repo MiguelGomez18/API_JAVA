@@ -5,14 +5,11 @@ WORKDIR /app
 
 COPY . .
 
-# Verifica la versión de Java instalada
-RUN java -version
-
 RUN apt-get update && apt-get install -y maven
 
 RUN chmod +x mvnw
 
-RUN ./mvnw clean install -DskipTests
+RUN ./mvnw clean package -DskipTests
 
 # Etapa final
 FROM eclipse-temurin:21-jre
