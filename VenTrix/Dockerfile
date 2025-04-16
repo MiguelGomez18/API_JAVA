@@ -1,12 +1,12 @@
-# Fase de construcción con Java 21
-FROM openjdk:21-jdk-slim AS builder
+# Fase de construcción con Java 21 y Maven
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
 COPY pom.xml .
 COPY src/ src/
 
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Fase de ejecución
 FROM openjdk:21-jre-slim
