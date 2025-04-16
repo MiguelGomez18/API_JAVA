@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM eclipse-temurin:21-jdk AS builder
+FROM eclipse-temurin:21-jdk-alpine AS builder
 
 WORKDIR /app
 COPY . .
@@ -11,7 +11,7 @@ RUN apt-get update && \
 RUN mvn -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
 
 # Etapa final
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 RUN mkdir -p /app/tokens
