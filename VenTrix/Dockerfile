@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y maven
 
 RUN chmod +x mvnw
 
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean install -DskipTests
 
 # Etapa final
 FROM eclipse-temurin:21-jre
