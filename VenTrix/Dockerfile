@@ -1,16 +1,21 @@
 # Etapa de construcción
-FROM maven:3.9.6-eclipse-temurin-21 AS builder
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
 
 WORKDIR /app
 
 COPY . .
+
+# Verifica la versión de Java instalada
+RUN java -version
+
+RUN apt-get update && apt-get install -y maven
 
 RUN chmod +x mvnw
 
 RUN ./mvnw clean package -DskipTests
 
 # Etapa final
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
