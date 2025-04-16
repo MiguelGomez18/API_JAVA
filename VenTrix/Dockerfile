@@ -5,12 +5,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get update && \
-    apt-get install -y maven && \
-    mvn -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean package
-
 # Construimos la aplicación
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package
 
 # Etapa de producción
 FROM eclipse-temurin:21-jdk-alpine
