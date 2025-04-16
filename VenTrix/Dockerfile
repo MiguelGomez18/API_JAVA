@@ -1,27 +1,19 @@
 # Etapa de construcción
-FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
+FROM eclipse-temurin:21-jdk AS builder
 
 WORKDIR /app
-
 COPY . .
 
-RUN apt-get update && apt-get install -y maven
-
-RUN chmod +x mvnw
-
-RUN ./mvnw clean package -DskipTests
+# Configura el entorno correctamente antes de ejecutar Maven
+RUN apt-get update && \
+    apt-get install -y curl && \
+    chmod +x mvnw && \
+    ./mvnw -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
 
 # Etapa final
 FROM eclipse-temurin:21-jre
-
 WORKDIR /app
-
-# Copiamos el .jar generado
 COPY --from=builder /app/target/*.jar app.jar
-
-# Solo la carpeta de tokens (para uso local)
 RUN mkdir -p /app/tokens
-
 EXPOSE 8890
-
 ENTRYPOINT ["java", "-jar", "app.jar"]
