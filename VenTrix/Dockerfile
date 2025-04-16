@@ -5,11 +5,9 @@ WORKDIR /app
 
 COPY . .
 
-# ✅ Paso 1: Dar permiso de ejecución
-RUN chmod +x ./mvnw
 
 # ✅ Paso 2: Ejecutar build con wrapper de Maven
-RUN ./mvnw clean package -DskipTests
+RUN ./mvn clean package -DskipTests
 
 # Etapa final
 FROM eclipse-temurin:21-jdk
