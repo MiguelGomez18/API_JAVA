@@ -5,7 +5,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN ./mvn clean package -DskipTests
+RUN chmod +x ./mvnw
+
+RUN ./mvnw clean package -DskipTests
 
 # Etapa final
 FROM eclipse-temurin:21-jdk
