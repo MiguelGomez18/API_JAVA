@@ -5,9 +5,7 @@ WORKDIR /app
 
 COPY . .
 
-
-# ✅ Paso 2: Ejecutar build con wrapper de Maven
-RUN ./mvn clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Etapa final
 FROM eclipse-temurin:21-jdk
