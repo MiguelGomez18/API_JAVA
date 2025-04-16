@@ -1,21 +1,21 @@
-# Fase de construcción
+# Fase de construcción con OpenJDK 21 y Maven instalado
 FROM openjdk:21-jdk-slim AS builder
 
 WORKDIR /app
 
-# 1. Copia archivos (incluyendo el wrapper)
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
+# 1. Instala Maven
+RUN apt-get update && \
+    apt-get install -y maven
 
-# 2. Da permisos al wrapper y ejecuta
-RUN chmod +x mvnw && \
-    ./mvnw dependency:go-offline -B
-
-# 3. Copia el código y construye
+# 2. Copia los archivos del proyecto
+COPY pom.xml .
 COPY src/ src/
-RUN ./mvnw clean package -DskipTests
 
-# Fase de producción (igual que arriba)
+# 3. Descarga dependencias y construye (sin usar el wrapper)
+RUN mvn dependency:go-offline -B && \
+    mvn clean package -DskipTests
+
+# Fase de producción
 FROM openjdk:21-jre-slim
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
