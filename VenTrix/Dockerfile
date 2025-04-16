@@ -7,8 +7,8 @@ COPY . .
 # Configura el entorno correctamente antes de ejecutar Maven
 RUN apt-get update && \
     apt-get install -y curl && \
-    chmod +x mvnw && \
-    ./mvnw -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
+    chmod +x mvnw &&
+RUN mvn -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
 
 # Etapa final
 FROM eclipse-temurin:21-jre
