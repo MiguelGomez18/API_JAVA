@@ -9,7 +9,7 @@ COPY pom.xml .
 COPY src/ src/
 
 # Compila el proyecto sin ejecutar los tests
-RUN mvn -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
+RUN mvn clean package -DskipTests
 
 # Etapa de ejecución: Java 21
 FROM eclipse-temurin:21-jre
